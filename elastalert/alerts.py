@@ -116,9 +116,14 @@ class BasicMatchString(object):
     def _add_match_items(self):
         match_items = self.match.items()
         match_items.sort(key=lambda x: x[0])
+        exclusion_result_fields = self.rule['exclusion_result_fields']
         for key, value in match_items:
             if key.startswith('top_events_'):
                 continue
+
+            if key in exclusion_result_fields:
+                continue
+
             value_str = unicode(value)
             value_str.replace('\\n', '\n')
             if type(value) in [list, dict]:

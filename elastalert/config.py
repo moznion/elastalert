@@ -331,6 +331,11 @@ def load_options(rule, conf, filename, args=None):
     if rule.get('scan_entire_timeframe') and not rule.get('timeframe'):
         raise EAException('scan_entire_timeframe can only be used if there is a timeframe specified')
 
+    # Set fields to exclude from result message
+    exclusion_result_fields = []
+    if 'exclusion_result_fields' in rule:
+        exclusion_result_fields = rule['exclusion_result_fields']
+    rule['exclusion_result_fields'] = frozenset(exclusion_result_fields)
 
 def load_modules(rule, args=None):
     """ Loads things that could be modules. Enhancements, alerts and rule type. """
